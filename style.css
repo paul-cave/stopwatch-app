@@ -1,0 +1,172 @@
+html {
+  --text-blue-default: rgb(180, 196, 228);
+  --text-blue-lighter: rgb(225, 231, 243);
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 62.5%;
+  font-family: "Roboto", sans-serif;
+}
+
+.container-window {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#606c88+0,3f4c6b+100;Grey+3D+%232 */
+  background: #606c88; /* Old browsers */
+  background: -moz-linear-gradient(
+    top,
+    #606c88 0%,
+    #3f4c6b 100%
+  ); /* FF3.6-15 */
+  background: -webkit-linear-gradient(
+    top,
+    #606c88 0%,
+    #3f4c6b 100%
+  ); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(
+    to bottom,
+    #606c88 0%,
+    #3f4c6b 100%
+  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#606c88', endColorstr='#3f4c6b',GradientType=0 ); /* IE6-9 */
+}
+
+.container-app {
+  width: 35rem;
+  height: 60rem;
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#58637c+0,313e54+100 */
+  background: #58637c; /* Old browsers */
+  background: -moz-linear-gradient(
+    top,
+    #58637c 0%,
+    #313e54 100%
+  ); /* FF3.6-15 */
+  background: -webkit-linear-gradient(
+    top,
+    #58637c 0%,
+    #313e54 100%
+  ); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(
+    to bottom,
+    #58637c 0%,
+    #313e54 100%
+  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#58637c', endColorstr='#313e54',GradientType=0 ); /* IE6-9 */
+  box-shadow: 1px 1px 5rem rgba(0, 0, 0, 0.4);
+  border-radius: 4rem;
+  font-size: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.container-nav {
+  /* margin-top: auto; */
+  justify-self: flex-end;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.nav-btn {
+  width: 50%;
+  text-align: center;
+  /* border-top: 1px solid black; */
+  padding: 1.5rem;
+  font-size: 2rem;
+  color: var(--text-blue-default);
+  font-weight: 300;
+}
+
+.nav-btn-timer,
+.nav-btn-stop {
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.nav-selected {
+  color: var(--text-blue-lighter);
+}
+
+.container-btns {
+  justify-self: flex-end;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.control-btn {
+  border-radius: 3rem;
+  padding: 0.9rem 1rem 0.9rem 1rem;
+  background: rgb(28, 47, 87);
+  color: var(--text-blue-lighter);
+  margin: 1rem 1rem 7rem 1rem;
+  width: 10rem;
+  text-align: center;
+  font-weight: 300;
+}
+
+.btn-resume {
+  background: rgb(28, 47, 87);
+}
+
+.btn-pause {
+  background: rgb(75, 33, 39);
+}
+
+.btn-reset-cancel {
+  background: rgb(44, 46, 51);
+}
+
+.container-time {
+  margin-top: auto;
+  margin-bottom: 15rem;
+  display: flex;
+  justify-content: center;
+  font-size: 5rem;
+  color: var(--text-blue-default);
+}
+
+.input-timer {
+  display: flex;
+}
+
+input {
+  width: 6rem;
+  font-family: inherit;
+  font-size: 5rem;
+  background: none;
+  border: none;
+  color: var(--text-blue-default);
+}
+
+input::placeholder {
+  color: var(--text-blue-default);
+}
+
+input:focus {
+  outline: none;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.hidden {
+  display: none;
+}
