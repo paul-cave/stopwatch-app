@@ -12,12 +12,8 @@ html {
   font-family: "Roboto", sans-serif;
 }
 
-.container-window {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* background gradient */
+body {
   /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#606c88+0,3f4c6b+100;Grey+3D+%232 */
   background: #606c88; /* Old browsers */
   background: -moz-linear-gradient(
@@ -36,6 +32,14 @@ html {
     #3f4c6b 100%
   ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#606c88', endColorstr='#3f4c6b',GradientType=0 ); /* IE6-9 */
+}
+
+.container-window {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .container-app {
@@ -111,13 +115,14 @@ html {
   width: 10rem;
   text-align: center;
   font-weight: 300;
+  cursor: pointer;
 }
 
-.btn-resume {
+.resume {
   background: rgb(28, 47, 87);
 }
 
-.btn-pause {
+.pause {
   background: rgb(75, 33, 39);
 }
 
