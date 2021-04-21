@@ -13,36 +13,12 @@ const containerApp = document.querySelector(".container-app");
 const inputMin = document.querySelector(".input-min");
 const inputSec = document.querySelector(".input-sec");
 
-// MODE VARIABLE
+// HELPER VARIABLES
 let mode = "timer";
+let timer;
+let timeStore;
 
-// MODE CHANGE
-navBtns.addEventListener("click", function (e) {
-  const el = e.target;
-  // select timer
-  if (
-    el.classList.contains("nav-btn-timer") &&
-    !el.classList.contains("nav-selected")
-  ) {
-    navTimer.classList.toggle("nav-selected");
-    navStop.classList.toggle("nav-selected");
-    timeDisplay.classList.add("hidden");
-    timeInput.classList.remove("hidden");
-
-    mode = "timer";
-  }
-  // select stopwatch
-  if (
-    el.classList.contains("nav-btn-stop") &&
-    !el.classList.contains("nav-selected")
-  ) {
-    navTimer.classList.toggle("nav-selected");
-    navStop.classList.toggle("nav-selected");
-    timeDisplay.classList.remove("hidden");
-    timeInput.classList.add("hidden");
-    mode = "stopwatch";
-  }
-});
+// TIMER FUNCTIONS
 
 // START TIMER
 const startTimer = function (minIn, secIn) {
@@ -84,46 +60,79 @@ const startStopwatch = function (minIn = 0, secIn = 0, msecIn = 0) {
   return timer;
 };
 
+// HELPER FUNCTIONS
+
+// NAV TOGGLE
+const navClassToggle = function () {
+  navTimer.classList.toggle("nav-selected");
+  navStop.classList.toggle("nav-selected");
+};
+
+// SHOW START BUTTON, HIDE OTHERS
+const resetButtonVisibility = function () {
+  startBtn.classList.remove("hidden");
+  pauseResumeBtn.classList.add("hidden");
+  resetCancelBtn.classList.add("hidden");
+};
+
+// TOGGLE PAUSE/RESUME BUTTON CLASS
+const pauseResumeToggle = function () {
+  pauseResumeBtn.classList.toggle("resume");
+  pauseResumeBtn.classList.toggle("pause");
+};
+
+// SHOW TIME DISPLAY, HIDE INPUT FIELDS
+const showDisplayHideInput = function () {
+  timeInput.classList.add("hidden");
+  timeDisplay.classList.remove("hidden");
+};
+
+// SHOW INPUT FIELDS, HIDE DISPLAY
+const hideDisplayShowInput = function () {
+  timeInput.classList.remove("hidden");
+  timeDisplay.classList.add("hidden");
+};
+
+// CANCEL TIMER
+const cancelTimer = function () {
+  clearInterval(timer);
+  timeDisplay.textContent = `00:00.00`;
+  containerApp.classList.remove("container-app-alert");
+  resetButtonVisibility();
+};
+
 // EVENT HANDLERS
-let timer;
-let timeStore;
 
 // START BUTTON PRESS
 startBtn.addEventListener("click", function () {
+  if (mode === "timer") {
+    if (inputMin.value === "" && inputSec.value === "") return;
+    if (!isFinite(inputMin.value) || !isFinite(inputSec.value)) return;
+    const min = inputMin.value ? +inputMin.value : 0;
+    const sec = inputSec.value ? +inputSec.value : 0;
+    if (min < 0 || sec < 0) return;
+    timer = startTimer(min, sec);
+    showDisplayHideInput();
+    resetCancelBtn.textContent = "Cancel";
+  }
+  if (mode === "stopwatch") {
+    timer = startStopwatch();
+    resetCancelBtn.textContent = "Reset";
+  }
   startBtn.classList.add("hidden");
   pauseResumeBtn.classList.remove("hidden");
   resetCancelBtn.classList.remove("hidden");
-  if (mode === "timer") {
-    resetCancelBtn.textContent = "Cancel";
-    const min = inputMin.value ? +inputMin.value : 0;
-    const sec = inputSec.value ? +inputSec.value : 0;
-    timer = startTimer(min, sec);
-    timeInput.classList.add("hidden");
-    timeDisplay.classList.remove("hidden");
-  }
-  if (mode === "stopwatch") {
-    console.log("STOPWATCH");
-    resetCancelBtn.textContent = "Reset";
-    timer = startStopwatch();
-  }
 });
 
 // CANCEL BUTTON PRESS
 resetCancelBtn.addEventListener("click", function () {
-  startBtn.classList.remove("hidden");
-  pauseResumeBtn.classList.add("hidden");
-  resetCancelBtn.classList.add("hidden");
+  cancelTimer();
   if (pauseResumeBtn.classList.contains("resume")) {
     pauseResumeBtn.textContent = "Pause";
-    pauseResumeBtn.classList.toggle("resume");
-    pauseResumeBtn.classList.toggle("pause");
+    pauseResumeToggle();
   }
-  clearInterval(timer);
-  containerApp.classList.remove("container-app-alert");
-  timeDisplay.textContent = `00:00.00`;
   if (mode === "timer") {
-    timeDisplay.classList.add("hidden");
-    timeInput.classList.remove("hidden");
+    hideDisplayShowInput();
     inputMin.value = "";
     inputSec.value = "";
   }
@@ -131,8 +140,7 @@ resetCancelBtn.addEventListener("click", function () {
 
 // PAUSE BUTTON PRESS
 pauseResumeBtn.addEventListener("click", function () {
-  pauseResumeBtn.classList.toggle("resume");
-  pauseResumeBtn.classList.toggle("pause");
+  pauseResumeToggle();
   // when pause is pressed
   if (pauseResumeBtn.classList.contains("resume")) {
     pauseResumeBtn.textContent = "Resume";
@@ -147,8 +155,28 @@ pauseResumeBtn.addEventListener("click", function () {
       timer = startTimer(+min, +sec);
     }
     if (mode === "stopwatch") {
-      const [secS, msec] = sec.split(".");
-      timer = startStopwatch(+min, +secS, +msec);
+      const [secStop, msec] = sec.split(".");
+      timer = startStopwatch(+min, +secStop, +msec);
     }
+  }
+});
+
+// MODE CHANGE
+navBtns.addEventListener("click", function (e) {
+  const el = e.target;
+  if (el.classList.contains("nav-selected")) return;
+
+  cancelTimer();
+  // select timer
+  if (el.classList.contains("nav-btn-timer")) {
+    navClassToggle();
+    hideDisplayShowInput();
+    mode = "timer";
+  }
+  // select stopwatch
+  if (el.classList.contains("nav-btn-stop")) {
+    navClassToggle();
+    showDisplayHideInput();
+    mode = "stopwatch";
   }
 });
